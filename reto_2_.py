@@ -10,6 +10,7 @@ Original file is located at
 #Programa de registro de usuarios
 
 import json
+import random
 
 def cantidad_usuarios():
     while True:
@@ -57,11 +58,15 @@ def registro_usuarios(numero_usuarios):
 
     # Bucle para registrar usuarios
     for contador in range(numero_usuarios):
-        usuario = {"nombre": obtener_nombre(),
+        id = random.randint(0, 100)
+        while id in diccionario_de_usuarios:  # Verificar si el ID ya está en uso
+            id = random.randint(0, 100)  # Generar un nuevo ID si ya está en uso
+        usuario = {id:{"nombre": obtener_nombre(),
                    "apellido": obtener_apellido(),
                    "telefono": obtener_telefono(),
-                   "mail": obtener_mail()}
-        diccionario_de_usuarios[contador] = usuario
+                   "mail": obtener_mail()}}
+
+        diccionario_de_usuarios.update(usuario)
 
     return json.dumps(diccionario_de_usuarios, sort_keys=True, indent=4)
 
